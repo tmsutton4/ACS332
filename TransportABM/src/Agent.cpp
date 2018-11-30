@@ -6,7 +6,7 @@ RepastHPCAgent::RepastHPCAgent(repast::AgentId id): id_(id), c(100), total(200){
 
 RepastHPCAgent::RepastHPCAgent(repast::AgentId id, double newC, double newTotal): id_(id), c(newC), total(newTotal){ }
 
-RepastHPCAgent::~RepastHPCAgent(){ }
+RepastHPCAgent::~RepastHPCAgent(){ } //Agent destructor 
 
 
 void RepastHPCAgent::set(int currentRank, double newC, double newTotal)
@@ -14,6 +14,24 @@ void RepastHPCAgent::set(int currentRank, double newC, double newTotal)
     id_.currentRank(currentRank);
     c     = newC;
     total = newTotal;
+}
+
+void initAgent() // Function to set initial state variable values
+{
+    // Set age
+    
+    // Set commuting distance
+
+    // Set societal normality 
+
+    // Set agent region
+
+}
+
+void updateDesires() // Function to update the agent desires based on current state variable values
+{
+    
+
 }
 
 bool RepastHPCAgent::cooperate()

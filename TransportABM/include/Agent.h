@@ -17,11 +17,26 @@ private:
     repast::AgentId id_;
     double c;
     double total;
+    
+    int age; // Age of the agent expressed as an integer
+    double commuteDist; // Distance agent must commute to work
+    double socNorm; // The societal normality of cycling as perceived by the agent
+    string region; // The region in which the agent resides. Four regions are modelled.
+
+    double des_age; // The desire to cycle based on the age of the agent
+    double des_commuteDist; // The desire to cycle based on the distance of commute
+    double des_socNorm; // The desire to cycle based on the cycle state of agents neighbours
+    double des_region; // The desire to cycle based on the region the agent
+    double des_popHealth; // The desire to cycle based on the health of the populous in which the agent resides. Value between 0 and 1
+    double des_popSafety; // The desire to cycle based on the safety of cycling as perceived as the populous. Value between 0 and 1
+
+    bool cycles; // Agent binary state output - whether agent cycles
+    
 
 public:
     // Agent constructors
     RepastHPCAgent(repast::AgentId id);
-	RepastHPCAgent(){}
+    RepastHPCAgent(){}
     RepastHPCAgent(repast::AgentId id, double newC, double newTotal);
 
     ~RepastHPCAgent(); //agent destructor
@@ -44,6 +59,22 @@ public:
     double getTotal()
     {
         return total;
+    }
+    int getAge()
+    {
+        return age;
+    }
+    double getcommuteDist()
+    {
+         return commuteDist;
+    }
+    double getSocNorm()
+    {
+         return socNorm;
+    }
+    string getRegion()
+    {
+         return region;
     }
 
     /* Setter */
