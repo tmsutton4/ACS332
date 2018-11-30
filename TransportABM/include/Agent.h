@@ -52,9 +52,9 @@ public:
     /* Actions */
     bool cooperate(); // Will indicate whether the agent cooperates or not; probability determined by = c / total
     void play(repast::SharedNetwork<RepastHPCAgent,
-              DemoModelCustomEdge<RepastHPCAgent>,
-              DemoModelCustomEdgeContent<RepastHPCAgent>,
-              DemoModelCustomEdgeContentManager<RepastHPCAgent> > *network);
+              ModelCustomEdge<RepastHPCAgent>,
+              ModelCustomEdgeContent<RepastHPCAgent>,
+              ModelCustomEdgeContentManager<RepastHPCAgent> > *network);
 
 };
 

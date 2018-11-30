@@ -22,9 +22,9 @@ bool RepastHPCAgent::cooperate()
 }
 
 void RepastHPCAgent::play(repast::SharedNetwork<RepastHPCAgent,
-                              DemoModelCustomEdge<RepastHPCAgent>,
-                              DemoModelCustomEdgeContent<RepastHPCAgent>,
-                              DemoModelCustomEdgeContentManager<RepastHPCAgent> > *network)
+                              ModelCustomEdge<RepastHPCAgent>,
+                              ModelCustomEdgeContent<RepastHPCAgent>,
+                              ModelCustomEdgeContentManager<RepastHPCAgent> > *network)
 {
     std::vector<RepastHPCAgent*> agentsToPlay; // vector to hold agent objects, <> specifies vector type
     network->successors(this, agentsToPlay);
@@ -34,7 +34,7 @@ void RepastHPCAgent::play(repast::SharedNetwork<RepastHPCAgent,
     std::vector<RepastHPCAgent*>::iterator agentToPlay = agentsToPlay.begin(); // declare and initialise an iterator 'agentToPlay' that holds value of iterator position in agentsToPlay vector
     while(agentToPlay != agentsToPlay.end()) // iterates through each agent
     {
-        boost::shared_ptr<DemoModelCustomEdge<RepastHPCAgent> > edge = network->findEdge(this, *agentToPlay);
+        boost::shared_ptr<ModelCustomEdge<RepastHPCAgent> > edge = network->findEdge(this, *agentToPlay);
         double edgeWeight = edge->weight();
         int confidence = edge->getConfidence();
 

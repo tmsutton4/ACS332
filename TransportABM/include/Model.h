@@ -17,7 +17,7 @@
 
 
 /* Agent Package Provider */
-class RepastHPCDemoAgentPackageProvider
+class RepastHPCAgentPackageProvider
 {
 
     private:
@@ -25,7 +25,7 @@ class RepastHPCDemoAgentPackageProvider
 
     public:
 
-        RepastHPCDemoAgentPackageProvider(repast::SharedContext<RepastHPCAgent>* agentPtr);
+        RepastHPCAgentPackageProvider(repast::SharedContext<RepastHPCAgent>* agentPtr);
 
         void providePackage(RepastHPCAgent * agent, std::vector<RepastHPCAgentPackage>& out);
 
@@ -34,7 +34,7 @@ class RepastHPCDemoAgentPackageProvider
 };
 
 /* Agent Package Receiver */
-class RepastHPCDemoAgentPackageReceiver
+class RepastHPCAgentPackageReceiver
 {
 
     private:
@@ -42,7 +42,7 @@ class RepastHPCDemoAgentPackageReceiver
 
     public:
 
-        RepastHPCDemoAgentPackageReceiver(repast::SharedContext<RepastHPCAgent>* agentPtr);
+        RepastHPCAgentPackageReceiver(repast::SharedContext<RepastHPCAgent>* agentPtr);
 
         RepastHPCAgent * createAgent(RepastHPCAgentPackage package);
 
@@ -81,13 +81,13 @@ class RepastHPCModel
 	repast::Properties* props; //properties object
 	repast::SharedContext<RepastHPCAgent> context;
 
-	RepastHPCDemoAgentPackageProvider* provider;
-	RepastHPCDemoAgentPackageReceiver* receiver;
+	RepastHPCAgentPackageProvider* provider;
+	RepastHPCAgentPackageReceiver* receiver;
 
-    	DemoModelCustomEdgeContentManager<RepastHPCAgent> edgeContentManager;
+    	ModelCustomEdgeContentManager<RepastHPCAgent> edgeContentManager;
 
 	repast::SVDataSet* agentValues;
-	repast::SharedNetwork<RepastHPCAgent, DemoModelCustomEdge<RepastHPCAgent>, DemoModelCustomEdgeContent<RepastHPCAgent>, DemoModelCustomEdgeContentManager<RepastHPCAgent> >* agentNetwork;
+	repast::SharedNetwork<RepastHPCAgent, ModelCustomEdge<RepastHPCAgent>, ModelCustomEdgeContent<RepastHPCAgent>, ModelCustomEdgeContentManager<RepastHPCAgent> >* agentNetwork;
 
 public:
 	RepastHPCModel(std::string propsFile, int argc, char** argv, boost::mpi::communicator* comm); // model constructor that takes properties file filename and an mpi communicator object
