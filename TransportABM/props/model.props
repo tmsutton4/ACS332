@@ -1,3 +1,6 @@
 #Properties file
 stop.at = 2
 count.of.agents = 4
+random.seed = 1
+distribution.uniform = double_uniform,0,1
+distribution.tri = triangle,2,5,10

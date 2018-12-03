@@ -74,7 +74,7 @@ int DataSource_AgentCTotals::getData()
 	repast::SharedContext<RepastHPCAgent>::const_local_iterator iter    = context->localBegin();
 	repast::SharedContext<RepastHPCAgent>::const_local_iterator iterEnd = context->localEnd();
 	while( iter != iterEnd)
-    {
+        {
 		sum+= (*iter)->getC();
 		iter++;
 	}
@@ -84,7 +84,7 @@ int DataSource_AgentCTotals::getData()
 
 RepastHPCModel::RepastHPCModel(std::string propsFile, int argc, char** argv, boost::mpi::communicator* comm): context(comm) //argc argv added so that properties can be entered via command line if wanted.
 {
-	props = new repast::Properties(propsFile, argc, argv, comm); // property object instantiated  with propsfile name, mpi communicator and main arguments. Mpi comm added so props file only has to be read once
+	props = new repast::Properties(propsFile, argc, argv, comm); // property object instantiated  with name, mpi communicator and main arguments. Mpi comm added so props file only has to be read once
 	stopAt = repast::strToInt(props->getProperty("stop.at")); // stopAt var initialised based on property file value.
 	countOfAgents = repast::strToInt(props->getProperty("count.of.agents"));
 	initializeRandom(*props, comm); //initialises random number generator and takes mpi communicator to pass random seed across processes.
@@ -136,11 +136,11 @@ void RepastHPCModel::requestAgents()
 {
 	int rank = repast::RepastProcess::instance()->rank();
 	int worldSize = repast::RepastProcess::instance()->worldSize();
-	repast::AgentRequest req(rank);
-	for (int i = 0; i < worldSize; i++) // For each process
+	repast::AgentRequest req(rank); // Instantiates request object using constructor with 'rank' parameter
+	for (int i = 0; i < worldSize; i++) // For each process (rank)
 	{
-        if(i != rank) // ... except this one
-        {
+        	if(i != rank) // ... except current rank
+        	{
 			std::vector<RepastHPCAgent*> agents;
 			context.selectAgents(5, agents); // Choose 5 local agents randomly
 			for(size_t j = 0; j < agents.size(); j++)
@@ -155,26 +155,28 @@ void RepastHPCModel::requestAgents()
     repast::RepastProcess::instance()->requestAgents<RepastHPCAgent, RepastHPCAgentPackage, RepastHPCAgentPackageProvider, RepastHPCAgentPackageReceiver>(context, req, *provider, *receiver, *receiver);
 }
 
-void RepastHPCModel::connectAgentNetwork()
+void RepastHPCModel::connectAgentNetwork() // Used to connect all of the agents to form a network
 {
-	repast::SharedContext<RepastHPCAgent>::const_local_iterator iter    = context.localBegin();
-	repast::SharedContext<RepastHPCAgent>::const_local_iterator iterEnd = context.localEnd();
-	while(iter != iterEnd)
-    {
-		RepastHPCAgent* ego = &**iter;
-		std::vector<RepastHPCAgent*> agents;
-		agents.push_back(ego);                          // Omit self
-		context.selectAgents(5, agents, true);          // Choose 5 other agents randomly
-		// Make an undirected connection
-		for(size_t i = 0; i < agents.size(); i++){
-            if(ego->getId().id() < agents[i]->getId().id()){
-              std::cout << "CONNECTING: " << ego->getId() << " to " << agents[i]->getId() << std::endl;
-              boost::shared_ptr<ModelCustomEdge<RepastHPCAgent> > Edge(new ModelCustomEdge<RepastHPCAgent>(ego, agents[i], i + 1, i * i));
-  	  	      agentNetwork->addEdge(Edge);
-            }
-		}
-		iter++;
+	std::vector<RepastHPCAgent*> agents; // Initialise vector for agents
+	context.selectAgents(countOfAgents, agents, true); // Choose all agents
+
+	// Make an undirected connection
+	for(size_t i = 0; i < agents.size(); i++)
+	{
+	    if(i == agents.size()-1)
+	    {
+	      std::cout << "rat CONNECTING: " << agents[i]->getId() << " to " << agents[0]->getId() << std::endl;
+	      boost::shared_ptr<ModelCustomEdge<RepastHPCAgent> > Edge(new ModelCustomEdge<RepastHPCAgent>(agents[i], agents[0], i + 1, i * i)); //instantiates new edge object wth agents & weight
+	      agentNetwork->addEdge(Edge);
+	    }
+	    else 
+            {
+                std::cout << "CONNECTING: " << agents[i]->getId() << " to " << agents[i+1]->getId() << std::endl;
+	        boost::shared_ptr<ModelCustomEdge<RepastHPCAgent> > Edge(new ModelCustomEdge<RepastHPCAgent>(agents[i], agents[i+1], i + 1, i * i));
+	        agentNetwork->addEdge(Edge);
+	    }
 	}
+	std::cout << agents[2]->getId() << endl;
 }
 
 void RepastHPCModel::cancelAgentRequests()

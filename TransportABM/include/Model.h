@@ -94,7 +94,7 @@ public:
 	~RepastHPCModel(); // model destructor - necessary as instantiated objects on heap must be destroyed once used to prevent memory leakage.
 	void init(); // initialises model and populates with agents.
 	void requestAgents();
-    void connectAgentNetwork();
+        void connectAgentNetwork();
 	void cancelAgentRequests();
 	void removeLocalAgents();
 	void moveAgents();
