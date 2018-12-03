@@ -1,8 +1,15 @@
 /* Agent.cpp */
 
 #include "Agent.h" // include agent header file
+#include "repast_hpc/initialize_random.h" // Provides methods for generating pseudo random numbers
+#include <boost/mpi.hpp> //include boost mpi wrapper
+#include "repast_hpc/Properties.h" // Enables use of the properties class so that props file can be used to load data
 
-RepastHPCAgent::RepastHPCAgent(repast::AgentId id): id_(id), c(100), total(200){ }
+RepastHPCAgent::RepastHPCAgent(repast::AgentId id): id_(id), c(100), total(200)
+{   
+    initAgent(); // Sets the initial agent state variables
+
+}
 
 RepastHPCAgent::RepastHPCAgent(repast::AgentId id, double newC, double newTotal): id_(id), c(newC), total(newTotal){ }
 
@@ -16,19 +23,24 @@ void RepastHPCAgent::set(int currentRank, double newC, double newTotal)
     total = newTotal;
 }
 
-void initAgent() // Function to set initial state variable values
+void RepastHPCAgent::initAgent() // Function to set initial state variable values
 {
+    
     // Set age
     
     // Set commuting distance
 
-    // Set societal normality 
-
     // Set agent region
+
+    // Set initial cycling state (2% of population)
+    cycleState = (repast::Random::instance()->nextDouble() <= 0.002);
+    std::cout << cycleState << std::endl;
+    
+    // Set societal normality 
 
 }
 
-void updateDesires() // Function to update the agent desires based on current state variable values
+void RepastHPCAgent::updateDesires() // Function to update the agent desires based on current state variable values
 {
     
 

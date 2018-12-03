@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 
 	repast::RepastProcess::init(configFile); // init is a static method, called from the RepastProcess class directly without the need of an instance. Repast HPC requires info regarding aspects of simulation in form of config file.
 
-	RepastHPCModel* model = new RepastHPCModel(propsFile, argc, argv, &world); //instantiate model object from the RepastHPC model class taking properties file, main arguments and mpi communicator as arguments.
+	RepastHPCModel* model = new RepastHPCModel(propsFile, argc, argv, &world); //instantiate model object from RepastHPC model taking properties file, main arguments and mpi communicator as arguments.
 	repast::ScheduleRunner& runner = repast::RepastProcess::instance()->getScheduleRunner(); // retrieves a handle to an object that manages the timing of events.
 
 	model->init(); //runs model init method that populates model with agents - the number of which is specified in the properties file.

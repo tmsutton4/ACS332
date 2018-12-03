@@ -30,7 +30,7 @@ private:
     double des_popHealth; // The desire to cycle based on the health of the populous in which the agent resides. Value between 0 and 1
     double des_popSafety; // The desire to cycle based on the safety of cycling as perceived as the populous. Value between 0 and 1
 
-    bool cycles; // Agent binary state output - whether agent cycles
+    bool cycleState; // Agent binary state output - whether agent cycles
     
 
 public:
@@ -52,33 +52,19 @@ public:
     }
 
     /* Agent state variable getters  */
-    double getC()
-    {
-        return c;
-    }
-    double getTotal()
-    {
-        return total;
-    }
-    int getAge()
-    {
-        return age;
-    }
-    double getcommuteDist()
-    {
-         return commuteDist;
-    }
-    double getSocNorm()
-    {
-         return socNorm;
-    }
-    string getRegion()
-    {
-         return region;
-    }
+    double getC(){return c;}
+    double getTotal(){return total;}
+    int getAge(){return age;}
+    double getcommuteDist(){return commuteDist;}
+    double getSocNorm(){return socNorm;}
+    string getRegion(){return region;}
+    bool getState(){return cycleState;} 
 
     /* Setter */
     void set(int currentRank, double newC, double newTotal);
+
+    void initAgent(); // Provides initial agent state variable values
+    void updateDesires(); // Updates the desires of the agent based on state variable values
 
     /* Actions */
     bool cooperate(); // Will indicate whether the agent cooperates or not; probability determined by = c / total
